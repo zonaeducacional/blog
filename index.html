@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#1e40af'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold text-gray-900">9º Ano</h1>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors">Sobre</a>
+                    
+                </nav>
+                <button id="menuBtn" class="md:hidden p-2 rounded-md hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <nav id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t pt-4">
+                <div class="flex flex-col space-y-2">
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors py-2">Home</a>
+                    <a href="#" class="text-gray-600 hover:text-primary transition-colors py-2">Sobre</a>
+                    
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <section class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Projeto Adolescência
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Projeto Didático de Literatura e Produção Textual - Posts dos Alunos
+            </p>
+        </section>
+
+        <!-- Search Bar -->
+        <div class="mb-8">
+            <div class="max-w-md mx-auto">
+                <input 
+                    type="text" 
+                    id="searchInput"
+                    placeholder="Buscar posts..." 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none"
+                >
+            </div>
+        </div>
+
+        <!-- Categories Filter -->
+        <div class="mb-8">
+            <div class="flex flex-wrap justify-center gap-2">
+                <button class="category-btn active px-4 py-2 rounded-full text-sm font-medium bg-primary text-white" data-category="all">
+                    Todos
+                </button>
+                <button class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors" data-category="familia">
+                    Família
+                </button>
+                <button class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors" data-category="escola">
+                    Escola
+                </button>
+                <button class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors" data-category="sociedade">
+                    Sociedade
+                </button>
+            </div>
+        </div>
+
+        <!-- Posts Grid -->
+        <div id="postsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Posts serão inseridos aqui pelo JavaScript -->
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center">
+            <button id="loadMoreBtn" class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-secondary transition-colors font-medium">
+                Carregar mais posts
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-16">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+           <center> <p><h2>Projeto Adolescência</h2></p></center>
+                
+                    <center><p>&copy; 2025 Projeto Adolescência. LPT. Escola Januário Eleodoro de Lima. 9º ano. Profº Sérgio Araújo.</p></center>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dados dos posts - ADICIONE SEUS POSTS AQUI
+        const blogPosts = [
+            {
+                id: 1,
+                title: "Como começar com JavaScript em 2024",
+                excerpt: "Um guia completo para iniciantes que querem aprender JavaScript do zero.",
+                category: "tecnologia",
+                date: "2024-01-15",
+                image: "https://web2.nekoweb.org/ASSIRIO.png",
+                url: "https://telegra.ph/Sobre-a-adolesc%C3%AAncia-08-08",
+                readTime: "5 min"
+            },
+            {
+                id: 2,
+                title: "10 dicas para produtividade no trabalho remoto",
+                excerpt: "Estratégias práticas para manter o foco e a eficiência trabalhando de casa.",
+                category: "lifestyle",
+                date: "2024-01-10",
+                image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=400&h=250&fit=crop",
+                url: "post-trabalho-remoto.html",
+                readTime: "7 min"
+            },
+            {
+                id: 3,
+                title: "Tutorial: Criando uma API REST com Node.js",
+                excerpt: "Passo a passo para criar sua primeira API usando Node.js e Express.",
+                category: "tutorial",
+                date: "2024-01-05",
+                image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400&h=250&fit=crop",
+                url: "post-api-nodejs.html",
+                readTime: "12 min"
+            },
+            {
+                id: 4,
+                title: "As tendências de design web para 2024",
+                excerpt: "Descubra as principais tendências que vão dominar o design web este ano.",
+                category: "tecnologia",
+                date: "2024-01-01",
+                image: "https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=400&h=250&fit=crop",
+                url: "post-design-trends-2024.html",
+                readTime: "6 min"
+            },
+            {
+                id: 5,
+                title: "Mindfulness e tecnologia: encontrando o equilíbrio",
+                excerpt: "Como usar a tecnologia de forma consciente para melhorar sua qualidade de vida.",
+                category: "lifestyle",
+                date: "2023-12-28",
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=250&fit=crop",
+                url: "post-mindfulness-tech.html",
+                readTime: "8 min"
+            },
+            {
+                id: 6,
+                title: "Configurando um ambiente de desenvolvimento Python",
+                excerpt: "Tutorial completo para configurar Python, pip e ambientes virtuais.",
+                category: "tutorial",
+                date: "2023-12-20",
+                image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=400&h=250&fit=crop",
+                url: "post-python-setup.html",
+                readTime: "10 min"
+            }
+        ];
+
+        let currentPosts = [];
+        let filteredPosts = [];
+        let postsPerPage = 6;
+        let currentPage = 1;
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            currentPosts = [...blogPosts];
+            filteredPosts = [...blogPosts];
+            renderPosts();
+            setupEventListeners();
+        });
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Menu mobile
+            const menuBtn = document.getElementById('menuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Busca
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', handleSearch);
+
+            // Filtros de categoria
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => handleCategoryFilter(btn));
+            });
+
+            // Botão carregar mais
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            loadMoreBtn.addEventListener('click', loadMorePosts);
+        }
+
+        // Renderizar posts
+        function renderPosts() {
+            const container = document.getElementById('postsContainer');
+            const postsToShow = filteredPosts.slice(0, currentPage * postsPerPage);
+            
+            container.innerHTML = postsToShow.map(post => createPostCard(post)).join('');
+            
+            // Mostrar/ocultar botão "Carregar mais"
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            if (postsToShow.length >= filteredPosts.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+        }
+
+        // Criar card do post
+        function createPostCard(post) {
+            const formattedDate = new Date(post.date).toLocaleDateString('pt-BR');
+            
+            return `
+                <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
+                                ${post.category}
+                            </span>
+                            <span class="text-gray-500 text-sm">${post.readTime}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                            ${post.title}
+                        </h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">
+                            ${post.excerpt}
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-500 text-sm">${formattedDate}</span>
+                            <a href="${post.url}" class="inline-flex items-center text-primary hover:text-secondary font-medium transition-colors">
+                                Ler mais
+                                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        // Busca
+        function handleSearch(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            filteredPosts = currentPosts.filter(post => 
+                post.title.toLowerCase().includes(searchTerm) ||
+                post.excerpt.toLowerCase().includes(searchTerm) ||
+                post.category.toLowerCase().includes(searchTerm)
+            );
+            currentPage = 1;
+            renderPosts();
+        }
+
+        // Filtro por categoria
+        function handleCategoryFilter(clickedBtn) {
+            const category = clickedBtn.dataset.category;
+            
+            // Atualizar botões ativos
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            
+            clickedBtn.classList.add('active', 'bg-primary', 'text-white');
+            clickedBtn.classList.remove('bg-gray-200', 'text-gray-700');
+            
+            // Filtrar posts
+            if (category === 'all') {
+                filteredPosts = [...currentPosts];
+            } else {
+                filteredPosts = currentPosts.filter(post => post.category === category);
+            }
+            
+            currentPage = 1;
+            renderPosts();
+        }
+
+        // Carregar mais posts
+        function loadMorePosts() {
+            currentPage++;
+            renderPosts();
+        }
+
+        // Adicionar estilos CSS customizados
+        const style = document.createElement('style');
+        style.textContent = `
+            .line-clamp-2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
